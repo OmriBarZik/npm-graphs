@@ -7,9 +7,11 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 console.log(__dirname);
 
+const packageName = "@angular/cli";
+
 const tree = await new Arborist({
   path: __dirname,
-}).buildIdealTree({ add: ["lodash"] });
+}).buildIdealTree({ add: [packageName] });
 
 const packages = [...tree.children]
   .filter(([name, meta]) => !!meta.edgesOut.size)
@@ -17,5 +19,5 @@ const packages = [...tree.children]
   .filter(([name, meta]) => meta.to?.name)
   .map(([name, meta]) => [meta.from.name, meta.to.name]);
 
-writeFile("lodash.json", JSON.stringify(packages));
+writeFile(`angular.json`, JSON.stringify(packages));
 // console.log(packages);
